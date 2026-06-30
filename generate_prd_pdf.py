@@ -1,0 +1,76 @@
+from fpdf import FPDF
+
+pdf = FPDF()
+pdf.set_auto_page_break(auto=True, margin=15)
+pdf.set_font('Helvetica', 'B', 16)
+pdf.add_page()
+pdf.cell(0, 10, 'Product Requirements Document', ln=True, align='C')
+pdf.ln(8)
+
+pdf.set_font('Helvetica', 'B', 12)
+pdf.cell(0, 8, 'Project Name', ln=True)
+pdf.set_font('Helvetica', '', 11)
+pdf.multi_cell(0, 7, 'Role-Based Field Sales Operations Platform')
+pdf.ln(4)
+
+pdf.set_font('Helvetica', 'B', 12)
+pdf.cell(0, 8, 'Purpose', ln=True)
+pdf.set_font('Helvetica', '', 11)
+pdf.multi_cell(0, 7, 'Enable field sales teams to manage territory workflows, record doorstep visits and sales, monitor real-time revenue, and support role-based access for managers, representatives, and admins.')
+pdf.ln(4)
+
+pdf.set_font('Helvetica', 'B', 12)
+pdf.cell(0, 8, 'Problem Statement', ln=True)
+pdf.set_font('Helvetica', '', 11)
+pdf.multi_cell(0, 7, 'Field sales teams need a simple, mobile-friendly system to claim and work territories, log house visits and customer interactions, record sales transactions at the door, view territory progress and real-time revenue, and enforce role-based permissions for reps, managers, and admins.')
+pdf.ln(4)
+
+pdf.set_font('Helvetica', 'B', 12)
+pdf.cell(0, 8, 'Target Users', ln=True)
+pdf.set_font('Helvetica', '', 11)
+pdf.multi_cell(0, 7, '1. Representative - Claims territories, visits houses, logs sales, views active territory progress.\n2. Manager - Creates and assigns territories, adds houses, monitors team coverage and completed blocks, reviews live sales feed.\n3. Admin - Oversees all data, sees total revenue and territory overview, manages users and system access.')
+pdf.ln(4)
+
+pdf.set_font('Helvetica', 'B', 12)
+pdf.cell(0, 8, 'Goals', ln=True)
+pdf.set_font('Helvetica', '', 11)
+pdf.multi_cell(0, 7, '- Deliver a role-based workflow for sales territory operations.\n- Ensure accurate territory and house completion metrics.\n- Provide live sales visibility and ranking.\n- Reduce duplicate territory/house entries.\n- Use INR currency formatting consistently.')
+pdf.ln(4)
+
+pdf.set_font('Helvetica', 'B', 12)
+pdf.cell(0, 8, 'Key Features', ln=True)
+pdf.set_font('Helvetica', '', 11)
+pdf.multi_cell(0, 7, 'Representative Features:\n- Claim available territory\n- View assigned territory house grid\n- Mark house status: visited, sold, not interested, no answer\n- Log sales with product, quantity, payment method\n- See territory completion panel and visited/total counts\n- Add new house addresses to existing active territory\n\nManager Features:\n- Create new territories with multiple house addresses\n- Add houses to existing territories\n- View territory assignment grid and progress bars\n- Release/unclaim territories\n- Track available vs completed territories\n\nAdmin Features:\n- View total sales and revenue metrics\n- See territory overview across the whole system\n- Access leaderboard and dashboard summary\n\nShared Features:\n- Dashboard with role-specific widgets\n- Live sales stream / recent activity\n- Leaderboard sorted by rep revenue\n- Role-based routing and permissions\n- Duplicate detection for territory names and addresses')
+pdf.ln(4)
+
+pdf.set_font('Helvetica', 'B', 12)
+pdf.cell(0, 8, 'Functional Requirements', ln=True)
+pdf.set_font('Helvetica', '', 11)
+pdf.multi_cell(0, 7, 'Dashboard:\n- Representative summary: houses visited today, territories visited, total houses visited, today revenue, territory completion, rank.\n- Manager summary: live sales feed, team revenue, available territories, completed territories, territory coverage.\n- Admin summary: total sales, total revenue, territories managed, active reps, territory overview.\n\nTerritories:\n- Territory model includes houses with status and lastVisit.\n- Create territory endpoint validates unique name and unique house addresses.\n- Add houses endpoint rejects duplicates and preserves existing list.\n- House update endpoint updates status and lastVisit.\n- Territory status updates to completed when all houses are visited.\n\nSales:\n- Log sale endpoint records payment method, customer, house address, products, and total.\n- Sale should update corresponding territory house status to sold.')
+pdf.ln(4)
+
+pdf.set_font('Helvetica', 'B', 12)
+pdf.cell(0, 8, 'Non-functional Requirements', ln=True)
+pdf.set_font('Helvetica', '', 11)
+pdf.multi_cell(0, 7, '- Responsive UI for desktop and mobile.\n- Secure JWT-based authentication.\n- Role-based middleware enforcement.\n- Consistent INR formatting across frontend.\n- Backend validation for duplicates and required fields.\n- Stable API error messaging.')
+pdf.ln(4)
+
+pdf.set_font('Helvetica', 'B', 12)
+pdf.cell(0, 8, 'Success Metrics', ln=True)
+pdf.set_font('Helvetica', '', 11)
+pdf.multi_cell(0, 7, '- Representatives can claim territory and log visits without errors.\n- Territory progress count shows distinct territory visited vs houses visited.\n- Manager can create territory with multiple houses and avoid duplicates.\n- Live sales stream updates accurately.\n- Leaderboard displays revenue in INR.\n- No duplicate territory or house address insertion.')
+pdf.ln(4)
+
+pdf.set_font('Helvetica', 'B', 12)
+pdf.cell(0, 8, 'Constraints & Assumptions', ln=True)
+pdf.set_font('Helvetica', '', 11)
+pdf.multi_cell(0, 7, '- MongoDB/Mongoose backend.\n- React + Vite frontend.\n- JWT auth already implemented.\n- No real websocket live updates yet; dashboard uses polling/API refresh.\n- Territory assignment is single rep per territory.')
+pdf.ln(4)
+
+pdf.set_font('Helvetica', 'B', 12)
+pdf.cell(0, 8, 'Future Improvements', ln=True)
+pdf.set_font('Helvetica', '', 11)
+pdf.multi_cell(0, 7, '- Real-time websocket sales/territory update feed.\n- Manager ability to assign reps directly.\n- Offline mode for reps on the road.\n- More detailed customer / product analytics.\n- Territory map visualization.')
+
+pdf.output('Role-Based_Field_Sales_PRD.pdf')
+print('Role-Based_Field_Sales_PRD.pdf created')

@@ -1,0 +1,12 @@
+# Node modules
+node_modules/
+
+# Environment files
+backend/.env
+frontend/.env
+
+# Vite build
+frontend/dist/
+
+# Logs
+*.log
