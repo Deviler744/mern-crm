@@ -12,6 +12,7 @@ const usersRoutes = require('./routes/users')
 const productsRoutes = require('./routes/products')
 const territoriesRoutes = require('./routes/territories')
 const salesRoutes = require('./routes/sales')
+const { seed } = require('./seed')
 
 const app = express()
 const port = process.env.PORT || 5000
@@ -62,8 +63,13 @@ console.log('Resolved MongoDB connection string from environment:',
 
 mongoose
   .connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => {
+  .then(async () => {
     console.log('MongoDB connected')
+    try {
+      await seed()
+    } catch (seedError) {
+      console.error('Seed error:', seedError)
+    }
     app.listen(port, () => console.log(`Server listening on port ${port}`))
   })
   .catch((error) => {

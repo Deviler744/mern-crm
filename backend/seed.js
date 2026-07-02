@@ -53,40 +53,29 @@ const territories = [
 
 async function seed() {
   try {
-    await mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    console.log('Connected to MongoDB for seeding')
+    console.log('Seeding initial data...')
 
     for (const userData of users) {
-      let user = await User.findOne({ email: userData.email })
-      if (!user) {
-        const hashed = await bcrypt.hash(userData.password, 10)
-        user = await User.create({
-          name: userData.name,
-          email: userData.email,
-          password: hashed,
-          role: userData.role
-        })
-        console.log(`Created user: ${userData.email}`)
-      } else {
-        console.log(`Skipping existing user: ${userData.email}`)
+      const hashed = await bcrypt.hash(userData.password, 10)
+      const upsertData = {
+        name: userData.name,
+        role: userData.role,
+        password: hashed
       }
+
+      const result = await User.findOneAndUpdate(
+        { email: userData.email },
+        { $set: upsertData, $setOnInsert: { email: userData.email } },
+        { upsert: true, new: true }
+      )
+
+      console.log(`Seeded user: ${userData.email} (id=${result._id})`)
     }
 
-    await User.updateMany(
-      { role: 'administrator' },
-      { $set: { role: 'admin' } }
-    )
-    await User.updateMany(
-      { role: 'sales_manager' },
-      { $set: { role: 'manager' } }
-    )
-    await User.updateMany(
-      { role: 'sales_rep' },
-      { $set: { role: 'representative' } }
-    )
+    await User.updateMany({ role: 'administrator' }, { $set: { role: 'admin' } })
+    await User.updateMany({ role: 'sales_manager' }, { $set: { role: 'manager' } })
+    await User.updateMany({ role: 'sales_rep' }, { $set: { role: 'representative' } })
 
-    const adminUser = await User.findOne({ email: 'admin@example.com' })
-    const managerUser = await User.findOne({ email: 'manager@example.com' })
     const repUser = await User.findOne({ email: 'sales@example.com' })
 
     for (const productData of products) {
@@ -99,7 +88,6 @@ async function seed() {
 
     const createdProducts = await Product.find({ sku: { $in: products.map((p) => p.sku) } })
 
-    const populatedTerritories = []
     for (const territoryData of territories) {
       let territory = await Territory.findOne({ name: territoryData.name })
       if (!territory) {
@@ -107,7 +95,6 @@ async function seed() {
           ...territoryData,
           assignedRep: territoryData.status === 'claimed' && repUser ? repUser._id : null
         })
-        populatedTerritories.push(territory)
         console.log(`Created territory: ${territoryData.name}`)
       }
     }
@@ -141,11 +128,11 @@ async function seed() {
     }
 
     console.log('Seeding complete')
-    process.exit(0)
   } catch (err) {
     console.error('Seeding failed:', err)
-    process.exit(1)
+    throw err
   }
 }
 
-seed()
+module.exports = { seed }
+
