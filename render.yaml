@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: mern-crm
+    env: docker
+    branch: main
+    autoDeploy: true
+    plan: starter
+    dockerfilePath: Dockerfile
+    healthCheckPath: /
+    startCommand: bash backend/start.sh
+    envVars:
+      - key: NODE_ENV
+        value: production

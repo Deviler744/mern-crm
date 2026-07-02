@@ -4,7 +4,7 @@ const cors = require('cors')
 const dotenv = require('dotenv')
 const path = require('path')
 
-dotenv.config()
+dotenv.config({ path: path.join(__dirname, '.env') })
 
 const authRoutes = require('./routes/auth')
 const dashboardRoutes = require('./routes/dashboard')
@@ -42,8 +42,26 @@ if (process.env.NODE_ENV === 'production') {
   })
 }
 
+const mongoUri =
+  process.env.MONGO_URI ||
+  process.env.MONGODB_URI ||
+  process.env.MONGO_URL ||
+  process.env.DATABASE_URL
+
+if (!mongoUri) {
+  console.error(
+    'Missing MongoDB connection string. Set MONGO_URI, MONGODB_URI, MONGO_URL, or DATABASE_URL.'
+  )
+  process.exit(1)
+}
+
+console.log('Resolved MongoDB connection string from environment:',
+  Boolean(mongoUri),
+  `(using ${process.env.MONGO_URI ? 'MONGO_URI' : process.env.MONGODB_URI ? 'MONGODB_URI' : process.env.MONGO_URL ? 'MONGO_URL' : process.env.DATABASE_URL ? 'DATABASE_URL' : 'none'})`
+)
+
 mongoose
-  .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log('MongoDB connected')
     app.listen(port, () => console.log(`Server listening on port ${port}`))
