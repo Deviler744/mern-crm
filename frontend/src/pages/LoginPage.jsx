@@ -36,20 +36,9 @@ export default function LoginPage() {
   return (
     <div className="login-page">
       <div className="login-card">
-        <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-          <h2 style={{ 
-            fontSize: '2rem', 
-            fontWeight: 800, 
-            background: 'linear-gradient(90deg, #4f46e5 0%, #c084fc 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            margin: '0 0 8px'
-          }}>
-            Territory Sales Live
-          </h2>
-          <p style={{ color: '#64748b', fontSize: '0.9rem', margin: 0 }}>
-            Sign in to start logging field transactions
-          </p>
+        <div className="login-heading">
+          <span className="login-logo">Your logo</span>
+          <h1>Login</h1>
         </div>
 
         <form onSubmit={handleSubmit} className="user-form">
