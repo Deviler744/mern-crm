@@ -36,12 +36,19 @@ export default function LoginPage() {
   return (
     <div className="login-page">
       <div className="login-card">
-        <div className="login-heading">
-          <span className="login-logo">Your logo</span>
-          <h1>Login</h1>
+        <div className="login-decorations" aria-hidden="true">
+          <span className="deco deco-top-loop" />
+          <span className="deco deco-right-loop" />
+          <span className="deco deco-left-sweep" />
+          <span className="deco deco-bottom-loop" />
+          <span className="deco deco-wave" />
         </div>
+        <div className="login-panel">
+          <div className="login-heading">
+            <h1>Login</h1>
+          </div>
 
-        <form onSubmit={handleSubmit} className="user-form">
+          <form onSubmit={handleSubmit} className="user-form">
           <div>
             <label htmlFor="login-email">Email Address</label>
             <input
@@ -88,24 +95,25 @@ export default function LoginPage() {
           >
             {loading ? 'Signing in...' : 'Sign In'}
           </button>
-        </form>
+          </form>
 
-        <div style={{ textAlign: 'center', marginTop: '24px' }}>
-          <button 
-            type="button" 
-            onClick={() => navigate('/forgot-password')} 
-            style={{
-              background: 'none',
-              border: 'none',
-              color: '#4f46e5',
-              fontWeight: 600,
-              fontSize: '0.875rem',
-              cursor: 'pointer',
-              textDecoration: 'underline'
-            }}
-          >
-            Forgot Password?
-          </button>
+          <div style={{ textAlign: 'center', marginTop: '24px' }}>
+            <button 
+              type="button" 
+              onClick={() => navigate('/forgot-password')} 
+              style={{
+                background: 'none',
+                border: 'none',
+                color: '#4f46e5',
+                fontWeight: 600,
+                fontSize: '0.875rem',
+                cursor: 'pointer',
+                textDecoration: 'underline'
+              }}
+            >
+              Forgot Password?
+            </button>
+          </div>
         </div>
       </div>
     </div>
