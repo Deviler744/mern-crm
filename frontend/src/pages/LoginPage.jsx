@@ -47,7 +47,6 @@ export default function LoginPage() {
 
         <div className="login-panel">
           <div className="login-heading">
-            <span className="login-logo-label">Field Sales CRM</span>
             <h1>Login</h1>
           </div>
 
