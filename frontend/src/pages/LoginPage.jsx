@@ -42,78 +42,62 @@ export default function LoginPage() {
           <span className="deco deco-left-sweep" />
           <span className="deco deco-bottom-loop" />
           <span className="deco deco-wave" />
+          <span className="deco deco-circle-bl" />
         </div>
+
         <div className="login-panel">
           <div className="login-heading">
+            <span className="login-logo-label">Field Sales CRM</span>
             <h1>Login</h1>
           </div>
 
           <form onSubmit={handleSubmit} className="user-form">
-          <div>
-            <label htmlFor="login-email">Email Address</label>
-            <input
-              id="login-email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              type="email"
-              placeholder="rep1@example.com"
-              required
-              style={{ width: '100%', marginTop: '6px' }}
-            />
-          </div>
-
-          <div style={{ marginTop: '12px' }}>
-            <label htmlFor="login-password">Password</label>
-            <input
-              id="login-password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              type="password"
-              placeholder="••••••••"
-              required
-              style={{ width: '100%', marginTop: '6px' }}
-            />
-          </div>
-
-          {error && (
-            <div className="form-error" style={{ marginTop: '16px', marginBottom: '0' }}>
-              {error}
+            <div>
+              <label htmlFor="login-email">Email</label>
+              <input
+                id="login-email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                type="email"
+                placeholder="username@gmail.com"
+                required
+                style={{ width: '100%' }}
+              />
             </div>
-          )}
 
-          <button 
-            type="submit" 
-            disabled={loading}
-            style={{ 
-              width: '100%', 
-              marginTop: '20px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              gap: '8px'
-            }}
-          >
-            {loading ? 'Signing in...' : 'Sign In'}
-          </button>
-          </form>
+            <div>
+              <label htmlFor="login-password">Password</label>
+              <input
+                id="login-password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                type="password"
+                placeholder="Password"
+                required
+                style={{ width: '100%' }}
+              />
+            </div>
 
-          <div style={{ textAlign: 'center', marginTop: '24px' }}>
-            <button 
-              type="button" 
-              onClick={() => navigate('/forgot-password')} 
-              style={{
-                background: 'none',
-                border: 'none',
-                color: '#4f46e5',
-                fontWeight: 600,
-                fontSize: '0.875rem',
-                cursor: 'pointer',
-                textDecoration: 'underline'
-              }}
+            <div className="login-forgot">
+              <button type="button" onClick={() => navigate('/forgot-password')}>
+                Forgot Password?
+              </button>
+            </div>
+
+            {error && (
+              <div className="form-error" style={{ marginBottom: '0' }}>
+                {error}
+              </div>
+            )}
+
+            <button
+              type="submit"
+              disabled={loading}
+              style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
             >
-              Forgot Password?
+              {loading ? 'Signing in...' : 'Sign in'}
             </button>
-          </div>
+          </form>
         </div>
       </div>
     </div>
